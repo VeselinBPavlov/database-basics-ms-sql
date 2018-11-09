@@ -11,7 +11,7 @@
 08. Functions and Procedures
 
 ## Status: 
-Uncomplited
+Uncompleted
 
 ## Certificate: 
 none
