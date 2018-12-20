@@ -1,35 +1,36 @@
 USE master
 GO
 
-
 --1. Create a Database
-CREATE DATABASE Bank
+CREATE DATABASE Bank ON PRIMARY
+   ( NAME = N'Bank_Data', FILENAME = N'D:\Courses\Data\Bank_Data.mdf' , SIZE = 167872KB , MAXSIZE = UNLIMITED, FILEGROWTH = 16384KB )
+LOG ON
+   ( NAME = N'Bank_Log', FILENAME = N'D:\Courses\Data\Bank_Log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 16384KB )
+COLLATE SQL_Latin1_General_CP1_CI_AS;
 GO
 
 USE Bank
 GO
 
-
 --2. Create Tables
 CREATE TABLE Clients (
-	Id INT PRIMARY KEY IDENTITY,
-	FirstName NVARCHAR(50) NOT NULL,
-	LastName NVARCHAR(50) NOT NULL
+	[Id] INT PRIMARY KEY IDENTITY,
+	[FirstName] NVARCHAR(50) NOT NULL,
+	[LastName] NVARCHAR(50) NOT NULL
 )
 
 CREATE TABLE AccountTypes (
-	Id INT PRIMARY KEY IDENTITY,
+	[Id] INT PRIMARY KEY IDENTITY,
 	[Name] NVARCHAR(50) NOT NULL
 )
 
 CREATE TABLE Accounts (
-	Id INT PRIMARY KEY IDENTITY,
-	AccountTypeId INT FOREIGN KEY REFERENCES AccountTypes(Id),
-	Balance DECIMAL(15, 2) NOT NUll DEFAULT(0),
-	ClientId INT FOREIGN KEY REFERENCES Clients(Id)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[AccountTypeId] INT FOREIGN KEY REFERENCES AccountTypes(Id),
+	[Balance] DECIMAL(15, 2) NOT NUll DEFAULT(0),
+	[ClientId] INT FOREIGN KEY REFERENCES Clients(Id)
 )
 GO
-
 
 --3. Insert Sample Data into Database
 INSERT INTO Clients
@@ -56,7 +57,6 @@ VALUES
 	(4, 2, 375.50) 
 GO
 
-
 --4. Create a Function
 CREATE FUNCTION f_CalculateTotalBalance 
 	(@ClientId INT)
@@ -69,7 +69,6 @@ BEGIN
 	RETURN @result	
 END
 GO
-
 
 --5. Create Procedures
 CREATE PROC p_AddAccount 
@@ -107,14 +106,13 @@ BEGIN
 END
 GO
 
-
 --6. Create Transactions Table and a Trigger
 CREATE TABLE Transactions (
-	Id INT PRIMARY KEY IDENTITY,
-	AccountId INT FOREIGN KEY REFERENCES Accounts(Id),
-	OldBalance DECIMAL(15, 2) NOT NULL,
-	NewBalance DECIMAL(15, 2) NOT NULL,
-	Amount AS NewBalance - OldBalance,
+	[Id] INT PRIMARY KEY IDENTITY,
+	[AccountId] INT FOREIGN KEY REFERENCES Accounts(Id),
+	[OldBalance] DECIMAL(15, 2) NOT NULL,
+	[NewBalance] DECIMAL(15, 2) NOT NULL,
+	[Amount] AS [NewBalance] - [OldBalance],
 	[DateTime] DATETIME2
 )
 GO
@@ -123,7 +121,7 @@ CREATE TRIGGER tr_Transaction ON Accounts
 AFTER UPDATE
 AS
 	INSERT INTO Transactions 
-		(AccountId, OldBalance, NewBalance, [DateTime])
+		([AccountId], [OldBalance], [NewBalance], [DateTime])
 	SELECT inserted.Id, deleted.Balance, inserted.Balance,
 		GETDATE() FROM inserted
 	JOIN deleted ON inserted.Id = deleted.Id

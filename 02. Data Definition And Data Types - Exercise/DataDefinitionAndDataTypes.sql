@@ -2,7 +2,11 @@ USE master
 GO
 
 --1. Create Database
-CREATE DATABASE Minions
+CREATE DATABASE [Minions] ON PRIMARY
+   ( NAME = N'Minions_Data', FILENAME = N'D:\Courses\Data\Minions_Data.mdf' , SIZE = 167872KB , MAXSIZE = UNLIMITED, FILEGROWTH = 16384KB )
+LOG ON
+   ( NAME = N'Minions_Log', FILENAME = N'D:\Courses\Data\Minions_Log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 16384KB )
+COLLATE SQL_Latin1_General_CP1_CI_AS;
 GO
 
 USE Minions
@@ -10,20 +14,20 @@ GO
 
 --2. Create Tables
 CREATE TABLE Minions (
-	Id INT PRIMARY KEY,
+	[Id] INT PRIMARY KEY,
 	[Name] NVARCHAR(50) NOT NULL,
-	Age INT
+	[Age] INT
 )
 
 CREATE TABLE Towns (
-	Id INT PRIMARY KEY,
+	[Id] INT PRIMARY KEY,
 	[Name] NVARCHAR(50) NOT NULL
 )
 GO
 
 --3. Alter Minions Table
 ALTER TABLE Minions
-ADD TownId INT FOREIGN KEY REFERENCES Towns(Id);
+ADD [TownId] INT FOREIGN KEY REFERENCES Towns(Id);
 GO
 
 --4. Insert Records in Both Tables
@@ -53,14 +57,14 @@ GO
 
 --7. Create Table People
 CREATE TABLE People (
-	Id INT PRIMARY KEY IDENTITY,
+	[Id] INT PRIMARY KEY IDENTITY,
 	[Name] NVARCHAR(200) NOT NULL,
-	Picture VARBINARY(MAX),
-	Height DECIMAL(5,2),
+	[Picture] VARBINARY(MAX),
+	[Height] DECIMAL(5,2),
 	[Weight] DECIMAL(5,2),
-	Gender char(1) NOT NULL CHECK(Gender='m' OR Gender='f'),
-	Birthdate DATE NOT NULL,
-	Biography NVARCHAR(MAX)
+	[Gender] char(1) NOT NULL CHECK(Gender='m' OR Gender='f'),
+	[Birthdate] DATE NOT NULL,
+	[Biography] NVARCHAR(MAX)
 )
 
 INSERT INTO People
@@ -75,12 +79,12 @@ GO
 
 --8. Create Table Users
 CREATE TABLE Users (
-	Id INT PRIMARY KEY IDENTITY,
-	Username VARCHAR(30) UNIQUE NOT NULL,
+	[Id] INT PRIMARY KEY IDENTITY,
+	[Username] VARCHAR(30) UNIQUE NOT NULL,
 	[Password] BINARY(26) NOT NULL,
-	ProfilePicture VARBINARY(MAX),
-	LastLoginTime DATETIME2,
-	IsDeleted BIT
+	[ProfilePicture] VARBINARY(MAX),
+	[LastLoginTime] DATETIME2,
+	[IsDeleted] BIT
 )
 
 INSERT INTO Users
@@ -126,40 +130,44 @@ CHECK (LEN(Username) >= 3)
 GO
 
 --13. Movies Database
-CREATE DATABASE Movies
+CREATE DATABASE Movies ON PRIMARY
+   ( NAME = N'Movies_Data', FILENAME = N'D:\Courses\Data\Movies_Data.mdf' , SIZE = 167872KB , MAXSIZE = UNLIMITED, FILEGROWTH = 16384KB )
+LOG ON
+   ( NAME = N'Movies_Log', FILENAME = N'D:\Courses\Data\Movies_Log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 16384KB )
+COLLATE SQL_Latin1_General_CP1_CI_AS;
 GO
 
 USE Movies
 GO
 
 CREATE TABLE Directors (
-	Id INT PRIMARY KEY IDENTITY,
-	DirectorName NVARCHAR(50) NOT NULL,
-	Notes NVARCHAR(MAX)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[DirectorName] NVARCHAR(50) NOT NULL,
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE Genres (
-	Id INT PRIMARY KEY IDENTITY,
-	GenreName NVARCHAR(50) NOT NULL,
-	Notes NVARCHAR(MAX)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[GenreName] NVARCHAR(50) NOT NULL,
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE Categories (
-	Id INT PRIMARY KEY IDENTITY,
-	CategoryName NVARCHAR(50) NOT NULL,
-	Notes NVARCHAR(MAX)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[CategoryName] NVARCHAR(50) NOT NULL,
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE Movies (
-	Id INT PRIMARY KEY IDENTITY,
-	Title NVARCHAR(50) NOT NULL,
-	DirectorId INT,
-	CopyrightYear SMALLINT,
+	[Id] INT PRIMARY KEY IDENTITY,
+	[Title] NVARCHAR(50) NOT NULL,
+	[DirectorId] INT,
+	[CopyrightYear] SMALLINT,
 	[Length] INT,
-	GenreId INT,
-	CategoryId INT,
-	Rating INT,
-	Notes NVARCHAR(MAX)
+	[GenreId] INT,
+	[CategoryId] INT,
+	[Rating] INT,
+	[Notes] NVARCHAR(MAX)
 )
 
 INSERT INTO Directors
@@ -200,68 +208,72 @@ VALUES
 GO
 
 --14. Car Rental Database
-CREATE DATABASE CarRental
+CREATE DATABASE CarRental ON PRIMARY
+   ( NAME = N'CarRental_Data', FILENAME = N'D:\Courses\Data\CarRental_Data.mdf' , SIZE = 167872KB , MAXSIZE = UNLIMITED, FILEGROWTH = 16384KB )
+LOG ON
+   ( NAME = N'CarRental_Log', FILENAME = N'D:\Courses\Data\CarRental_Log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 16384KB )
+COLLATE SQL_Latin1_General_CP1_CI_AS;
 GO
 
 USE CarRental
 GO
  
 CREATE TABLE Categories (
-	Id INT PRIMARY KEY IDENTITY,
-	CategoryName NVARCHAR(50) NOT NULL,
-	DailyRate DECIMAL(5, 2),
-	WeeklyRate DECIMAL(5, 2),
-	MonthlyRate DECIMAL(5, 2),
-	WeekendRate DECIMAL(5, 2)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[CategoryName] NVARCHAR(50) NOT NULL,
+	[DailyRate] DECIMAL(5, 2),
+	[WeeklyRate] DECIMAL(5, 2),
+	[MonthlyRate] DECIMAL(5, 2),
+	[WeekendRate] DECIMAL(5, 2)
 )
 
 CREATE TABLE Cars (
-	Id INT PRIMARY KEY IDENTITY,
-	PlateNumber SMALLINT UNIQUE NOT NULL,
-	Manufacturer NVARCHAR(50),
-	Model NVARCHAR(50) NOT NULL,
-	CarYear SMALLINT,
-	CategoryId INT,
-	Doors SMALLINT,
-	Picture VARBINARY(MAX),
-	Condition NVARCHAR(250),
-	Available BIT NOT NULL
+	[Id] INT PRIMARY KEY IDENTITY,
+	[PlateNumber] SMALLINT UNIQUE NOT NULL,
+	[Manufacturer] NVARCHAR(50),
+	[Model] NVARCHAR(50) NOT NULL,
+	[CarYear] SMALLINT,
+	[CategoryId] INT,
+	[Doors] SMALLINT,
+	[Picture] VARBINARY(MAX),
+	[Condition] NVARCHAR(250),
+	[Available] BIT NOT NULL
 )
 
 CREATE TABLE Employees (
-	Id INT PRIMARY KEY IDENTITY,
-	FirstName NVARCHAR(50) NOT NULL,
-	LastName NVARCHAR(50),
-	Title NVARCHAR(50),
-	Notes NVARCHAR(MAX)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[FirstName] NVARCHAR(50) NOT NULL,
+	[LastName] NVARCHAR(50),
+	[Title] NVARCHAR(50),
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE Customers (
-	Id INT PRIMARY KEY IDENTITY,
-	DriverLicenceNumber BIGINT NOT NULL,
-	FullName NVARCHAR(50) NOT NULL,
+	[Id] INT PRIMARY KEY IDENTITY,
+	[DriverLicenceNumber] BIGINT NOT NULL,
+	[FullName] NVARCHAR(50) NOT NULL,
 	[Address] NVARCHAR(50),
-	City NVARCHAR(50),
-	ZIPCode NVARCHAR(50),
-	Notes NVARCHAR(MAX)
+	[City] NVARCHAR(50),
+	[ZIPCode] NVARCHAR(50),
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE RentalOrders (
-	Id INT PRIMARY KEY IDENTITY,
-	EmployeeId INT UNIQUE NOT NULL,
-	CustomerId INT UNIQUE NOT NULL,
-	CarID INT UNIQUE NOT NULL,
-	TankLevel INT,
-	KilometrageStart BIGINT,
-	KilometrageEnd BIGINT,
-	TotalKilometrage BIGINT,
-	StartDate DATETIME2,
-	EndDate DATETIME2,
-	TotalDays INT,
-	RateApplied DECIMAL(5, 2),
-	TaxRate DECIMAL(5, 2),
-	OrderStatus NVARCHAR(50),
-	Notes NVARCHAR(MAX)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[EmployeeId] INT UNIQUE NOT NULL,
+	[CustomerId] INT UNIQUE NOT NULL,
+	[CarId] INT UNIQUE NOT NULL,
+	[TankLevel] INT,
+	[KilometrageStart] BIGINT,
+	[KilometrageEnd] BIGINT,
+	[TotalKilometrage] BIGINT,
+	[StartDate] DATETIME2,
+	[EndDate] DATETIME2,
+	[TotalDays] INT,
+	[RateApplied] DECIMAL(5, 2),
+	[TaxRate] DECIMAL(5, 2),
+	[OrderStatus] NVARCHAR(50),
+	[Notes] NVARCHAR(MAX)
 )
 
 INSERT INTO Categories
@@ -303,78 +315,82 @@ VALUES
 GO
 
 --15. Hotel Database
-CREATE DATABASE Hotel
+CREATE DATABASE Hotel ON PRIMARY
+   ( NAME = N'Hotel_Data', FILENAME = N'D:\Courses\Data\Hotel_Data.mdf' , SIZE = 167872KB , MAXSIZE = UNLIMITED, FILEGROWTH = 16384KB )
+LOG ON
+   ( NAME = N'Hotel_Log', FILENAME = N'D:\Courses\Data\Hotel_Log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 16384KB )
+COLLATE SQL_Latin1_General_CP1_CI_AS;
 GO
 
 USE Hotel
 GO
 
 CREATE TABLE Employees (
-	Id INT PRIMARY KEY IDENTITY,
-	FirstName NVARCHAR(50) NOT NULL,
-	LastName NVARCHAR(50),
-	Title NVARCHAR(50),
-	Notes NVARCHAR(MAX)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[FirstName] NVARCHAR(50) NOT NULL,
+	[LastName] NVARCHAR(50),
+	[Title] NVARCHAR(50),
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE Customers (
-	AccountNumber INT PRIMARY KEY NOT NULL,
-	FirstName NVARCHAR(50) NOT NULL,
-	LastName NVARCHAR(50),
-	PhoneNumber INT,
-	EmergencyName NVARCHAR(50),
-	EmergencyNumber NVARCHAR(50),
-	Notes NVARCHAR(MAX)
+	[AccountNumber] INT PRIMARY KEY NOT NULL,
+	[FirstName] NVARCHAR(50) NOT NULL,
+	[LastName] NVARCHAR(50),
+	[PhoneNumber] INT,
+	[EmergencyName] NVARCHAR(50),
+	[EmergencyNumber] NVARCHAR(50),
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE RoomStatus (
-	RoomStatus NVARCHAR(50),
-	Notes NVARCHAR(MAX)
+	[RoomStatus] NVARCHAR(50),
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE RoomTypes (
-	RoomType NVARCHAR(50),
-	Notes NVARCHAR(MAX)
+	[RoomType] NVARCHAR(50),
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE BedTypes (
-	BedType NVARCHAR(50),
-	Notes NVARCHAR(MAX)
+	[BedType] NVARCHAR(50),
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE Rooms (
-	RoomNumber INT PRIMARY KEY NOT NULL,
-	RoomType INT,
-	BedType INT,
-	Rate DECIMAL(5, 2),
-	RoomStatus INT,
-	Notes NVARCHAR(MAX)
+	[RoomNumber] INT PRIMARY KEY NOT NULL,
+	[RoomType] INT,
+	[BedType] INT,
+	[Rate] DECIMAL(5, 2),
+	[RoomStatus] INT,
+	[Notes] NVARCHAR(MAX)
 )
 
 CREATE TABLE Payments (
-	Id INT PRIMARY KEY IDENTITY,
-	EmployeeId INT NOT NULL,
-	PaymentDate DATETIME2 NOT NULL,
-	AccountNumber INT NOT NULL,
-	FirstDateOccupied DATETIME2,
-	LastDateOccupied DATETIME2,
-	TotalDays INT,
-	AmountCharged DECIMAL(15, 2),
-	TaxRate DECIMAL(5, 2),
-	TaxAmount DECIMAL(15, 2),
-	PaymentTotal DECIMAL(15, 2) NOT NULL,
-	Notes NVARCHAR(MAX)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[EmployeeId] INT NOT NULL,
+	[PaymentDate] DATETIME2 NOT NULL,
+	[AccountNumber] INT NOT NULL,
+	[FirstDateOccupied] DATETIME2,
+	[LastDateOccupied] DATETIME2,
+	[TotalDays] INT,
+	[AmountCharged] DECIMAL(15, 2),
+	[TaxRate] DECIMAL(5, 2),
+	[TaxAmount] DECIMAL(15, 2),
+	[PaymentTotal] DECIMAL(15, 2) NOT NULL,
+	[Notes] NVARCHAR(MAX)
 )
     
 CREATE TABLE Occupancies (
-	Id INT PRIMARY KEY IDENTITY,
-	EmployeeId INT NOT NULL,	
-	DateOccupied DATETIME2 NOT NULL,
-	AccountNumber INT,
-	RoomNumber INT,
-	RateApplied DECIMAL(5, 2),
-	PhoneCharge DECIMAL(15, 2),
-	Notes NVARCHAR(MAX)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[EmployeeId] INT NOT NULL,	
+	[DateOccupied] DATETIME2 NOT NULL,
+	[AccountNumber] INT,
+	[RoomNumber] INT,
+	[RateApplied] DECIMAL(5, 2),
+	[PhoneCharge] DECIMAL(15, 2),
+	[Notes] NVARCHAR(MAX)
 )
 
 INSERT INTO Employees
@@ -436,44 +452,48 @@ VALUES
 GO
 
 --16. Create SoftUni Database
-CREATE DATABASE SoftUni
+CREATE DATABASE SoftUni ON PRIMARY
+   ( NAME = N'SoftUni_Data', FILENAME = N'D:\Courses\Data\SoftUni_Data.mdf' , SIZE = 167872KB , MAXSIZE = UNLIMITED, FILEGROWTH = 16384KB )
+LOG ON
+   ( NAME = N'SoftUni_Log', FILENAME = N'D:\Courses\Data\SoftUni_Log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 16384KB )
+COLLATE SQL_Latin1_General_CP1_CI_AS;
 GO
 
 USE SoftUni
 GO
 
 CREATE TABLE Towns (
-	Id INT PRIMARY KEY IDENTITY,
+	[Id] INT PRIMARY KEY IDENTITY,
 	[Name] NVARCHAR(50) NOT NULL
 )
 
 CREATE TABLE Addresses (
-	Id INT PRIMARY KEY IDENTITY,
-	AddressText NVARCHAR(50) NOT NULL,
-	TownId INT CONSTRAINT FK_Addresses_Town FOREIGN KEY REFERENCES Towns(Id) NOT NULL
+	[Id] INT PRIMARY KEY IDENTITY,
+	[AddressText] NVARCHAR(50) NOT NULL,
+	[TownId] INT CONSTRAINT FK_Addresses_Town FOREIGN KEY REFERENCES Towns(Id) NOT NULL
 )
 
 CREATE TABLE Departments (
-	Id INT PRIMARY KEY IDENTITY,
+	[Id] INT PRIMARY KEY IDENTITY,
 	[Name] NVARCHAR(50) NOT NULL
 )
 
 CREATE TABLE Employees (
-	Id INT PRIMARY KEY IDENTITY,
-	FirstName NVARCHAR(50) NOT NULL,
-	MiddleName NVARCHAR(50) NOT NULL,
-	LastName NVARCHAR(50) NOT NULL,
-	JobTitle NVARCHAR(50)NOT NULL,
-	DepartmentId INT CONSTRAINT FK_Employees_Departments FOREIGN KEY REFERENCES Departments(Id) NOT NULL,
-	HireDate DATE NOT NULL,
-	Salary DECIMAL(15, 2) NOT NULL,
-	AddressId INT CONSTRAINT FK_Employees_Addresses FOREIGN KEY REFERENCES Addresses(Id)
+	[Id] INT PRIMARY KEY IDENTITY,
+	[FirstName] NVARCHAR(50) NOT NULL,
+	[MiddleName] NVARCHAR(50) NOT NULL,
+	[LastName] NVARCHAR(50) NOT NULL,
+	[JobTitle] NVARCHAR(50)NOT NULL,
+	[DepartmentId] INT CONSTRAINT FK_Employees_Departments FOREIGN KEY REFERENCES Departments(Id) NOT NULL,
+	[HireDate] DATE NOT NULL,
+	[Salary] DECIMAL(15, 2) NOT NULL,
+	[AddressId] INT CONSTRAINT FK_Employees_Addresses FOREIGN KEY REFERENCES Addresses(Id)
 )
 GO
 
 --17. Backup Database
 BACKUP DATABASE [SoftUni] 
-TO  DISK = N'C:\Users\veselinp\SoftUni.bak' WITH NOFORMAT, 
+TO  DISK = N'D:\Courses\Data\Backups\SoftUni.bak' WITH NOFORMAT, 
 NOINIT, 
 NAME = N'SoftUni-Full Database Backup', 
 SKIP, 
