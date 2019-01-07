@@ -7,9 +7,9 @@ USE master
 GO
 
 CREATE DATABASE SoftUni ON PRIMARY
-   ( NAME = N'SoftUni_Data', FILENAME = N'D:\Courses\Data\SoftUni_Data.mdf' , SIZE = 167872KB , MAXSIZE = UNLIMITED, FILEGROWTH = 16384KB )
+	( NAME = N'SoftUni_Data', FILENAME = N'D:\Courses\Data\SoftUni_Data.mdf' , SIZE = 167872KB , MAXSIZE = UNLIMITED, FILEGROWTH = 16384KB )
 LOG ON
-   ( NAME = N'SoftUni_Log', FILENAME = N'D:\Courses\Data\SoftUni_Log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 16384KB )
+	( NAME = N'SoftUni_Log', FILENAME = N'D:\Courses\Data\SoftUni_Log.ldf' , SIZE = 2048KB , MAXSIZE = 2048GB , FILEGROWTH = 16384KB )
 COLLATE SQL_Latin1_General_CP1_CI_AS;
 GO
 
