@@ -135,18 +135,19 @@ FROM Orders
 GO
 
 -- 17.  People Table
-CREATE TABLE People
-(
-	Id INT PRIMARY KEY IDENTITY NOT NULL,
+CREATE TABLE People (
+	[Id] INT PRIMARY KEY IDENTITY NOT NULL,
 	[Name] VARCHAR(50),
-	Birthdate DATE
+	[Birthdate] DATE
 )
 
-INSERT INTO People VALUES
-('Pesho', '1932-01-02'),
-('Gosho', '1935-02-03'),
-('Sasho', '1938-03-04'),
-('Tosho', '1943-05-06')
+INSERT INTO 
+	[People]
+VALUES
+	('Pesho', '1932-01-02'),
+	('Gosho', '1935-02-03'),
+	('Sasho', '1938-03-04'),
+	('Tosho', '1943-05-06')
 
 SELECT [Name],
 DATEDIFF(YEAR, Birthdate, GETDATE()) AS [Age in Years],
