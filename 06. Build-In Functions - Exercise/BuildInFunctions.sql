@@ -61,18 +61,41 @@ FROM Employees
 WHERE LEN(LastName) = 5
 GO
 
+-- 10. Rank Employees by Salary
+SELECT EmployeeID, FirstName, LastName, Salary,
+	DENSE_RANK ( ) OVER (PARTITION BY [Salary] ORDER BY EmployeeID) AS [Rank] 
+FROM Employees
+WHERE Salary >= 10000 AND Salary <= 50000
+ORDER BY Salary DESC
+GO
+
+-- 11. Find All Employees with Rank 2
+WITH CTE_Rank2 AS (
+	SELECT EmployeeID, FirstName, LastName, Salary,
+	DENSE_RANK ( ) OVER (PARTITION BY [Salary] ORDER BY EmployeeID) AS [Rank] 
+	FROM Employees
+	WHERE Salary >= 10000 AND Salary <= 50000	
+)
+
+SELECT *
+FROM CTE_Rank2
+WHERE [Rank] = 2
+ORDER BY Salary DESC
+GO
+
+
 -- Part II – Queries for Geography Database 
 USE [Geography]
 GO
 
--- 10. Countries Holding 'A' 3 or More Times
+-- 12. Countries Holding 'A' 3 or More Times
 SELECT CountryName, IsoCode
 FROM Countries
 WHERE CountryName LIKE '%a%a%a%'
 ORDER BY IsoCode
 GO
 
--- 11. Mix of Peak and River Names
+-- 13. Mix of Peak and River Names
 SELECT PeakName, RiverName,
 LOWER(PeakName + SUBSTRING(RiverName, 2, LEN(RiverName) - 1)) AS [Mix]
 FROM Peaks, Rivers
@@ -84,7 +107,7 @@ GO
 USE Diablo
 GO
 
--- 12. Games From 2011 and 2012 Year 
+-- 14. Games From 2011 and 2012 Year 
 SELECT TOP(50) [Name], 
 FORMAT([Start], 'yyyy-MM-dd') AS [Start]
 FROM Games
@@ -92,21 +115,21 @@ WHERE [Start] BETWEEN '2011-01-01' AND '2012-12-31'
 ORDER BY [Start], [Name]
 GO
 
--- 13. User Email Providers 
+-- 15. User Email Providers 
 SELECT Username,
 SUBSTRING(Email, CHARINDEX('@', Email, 1) + 1, LEN(Email)) AS [Email Provider]
 FROM Users
 ORDER BY [Email Provider], Username
 GO
 
--- 14. Get Users with IPAddress Like Pattern 
+-- 16. Get Users with IPAddress Like Pattern 
 SELECT Username, IpAddress
 FROM Users
 WHERE IpAddress LIKE '___.1%.%.___'
 ORDER BY Username
 GO
 
--- 15. Show All Games with Duration
+-- 17. Show All Games with Duration
 SELECT [Name] AS [Game],
 CASE
 	WHEN DATEPART(HOUR, [Start]) BETWEEN 0 AND 11 THEN 'Morning'
@@ -127,14 +150,14 @@ GO
 USE Orders
 GO
 
--- 16. Orders Table 
+-- 18. Orders Table 
 SELECT ProductName, OrderDate,
 DATEADD(DAY, 3, OrderDate) AS [Pay Due],
 DATEADD(MONTH, 1, OrderDate) AS [Deliver Due]
 FROM Orders
 GO
 
--- 17.  People Table
+-- 19.  People Table
 CREATE TABLE People (
 	[Id] INT PRIMARY KEY IDENTITY NOT NULL,
 	[Name] VARCHAR(50),
