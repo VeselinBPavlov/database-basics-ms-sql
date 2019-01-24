@@ -15,3 +15,6 @@ Uncompleted
 
 ## Certificate: 
 none
+
+## Notes:
+All labs and resources for them are remodeled from MySQL course.
