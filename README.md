@@ -11,7 +11,7 @@
 08. Functions and Procedures
 
 ## Status: 
-Uncompleted
+Completed
 
 ## Certificate: 
 <img src="certificate.jpeg"/>
