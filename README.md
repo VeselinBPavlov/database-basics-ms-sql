@@ -14,7 +14,7 @@
 Uncompleted
 
 ## Certificate: 
-none
+<img src="certificate.jpeg"/>
 
 ## Notes:
 All labs and resources for them are remodeled from MySQL course.
