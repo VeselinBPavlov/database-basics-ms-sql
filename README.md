@@ -10,9 +10,6 @@
 07. Database Programmability and Transactions
 08. Functions and Procedures
 
-## Status: 
-Completed
-
 ## Certificate: 
 <img src="certificate.jpeg"/>
 
